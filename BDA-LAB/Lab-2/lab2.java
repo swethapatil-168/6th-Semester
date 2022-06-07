@@ -15,7 +15,7 @@ public class lab1 {
 
 		try {
 
-			String sql = "insert into empdetails values('Swetha Patil','SP','abc.cs19@bmsce.ac.in','SDE','5454878546',10)";
+			String sql = "insert into empdetails values('Swetha Patil','abc.cs19@bmsce.ac.in','SDE','8454878546',10)";
 			ps = con.prepareStatement(sql);
 
 			ps.execute();
