@@ -1,5 +1,5 @@
-CREATE database Lab0;
-USE Lab0;
+CREATE database Lab1;
+USE Lab1;
 
 CREATE table department(
 	deptname varchar(5) primary key check(deptname in('CSE', 'ISE', 'ML'))
