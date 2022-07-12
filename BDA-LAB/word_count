@@ -1,0 +1,96 @@
+duser@bmsce-Precision-T1700:~$ start-all.sh
+This script is Deprecated. Instead use start-dfs.sh and start-yarn.sh
+Starting namenodes on [localhost]
+hduser@localhost's password: 
+localhost: namenode running as process 4468. Stop it first.
+hduser@localhost's password: 
+localhost: datanode running as process 4642. Stop it first.
+Starting secondary namenodes [0.0.0.0]
+hduser@0.0.0.0's password: 
+0.0.0.0: secondarynamenode running as process 4854. Stop it first.
+starting yarn daemons
+resourcemanager running as process 5013. Stop it first.
+hduser@localhost's password: 
+localhost: nodemanager running as process 5347. Stop it first.
+hduser@bmsce-Precision-T1700:~$ jps
+4642 DataNode
+5347 NodeManager
+4468 NameNode
+5013 ResourceManager
+4854 SecondaryNameNode
+6860 org.eclipse.equinox.launcher_1.5.600.v20191014-2022.jar
+9007 Jps
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls 
+Found 1 items
+drwxr-xr-x   - hduser supergroup          0 2022-06-15 09:58 output
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /
+Found 5 items
+drwxr-xr-x   - hduser supergroup          0 2022-06-14 10:32 /output
+drwxr-xr-x   - hduser supergroup          0 2022-06-14 10:31 /rgs
+drwxrwxr-x   - hduser supergroup          0 2019-08-01 16:19 /tmp
+drwxr-xr-x   - hduser supergroup          0 2022-06-15 09:58 /user
+drwxr-xr-x   - hduser supergroup          0 2022-06-15 10:04 /vallisha
+hduser@bmsce-Precision-T1700:~$ hadoop fs mkdir /mapreduce
+mkdir: Unknown command
+Did you mean -mkdir?  This command begins with a dash.
+hduser@bmsce-Precision-T1700:~$ hadoop fs -mkdir /mapreduce
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /
+Found 6 items
+drwxr-xr-x   - hduser supergroup          0 2022-06-18 10:02 /mapreduce
+drwxr-xr-x   - hduser supergroup          0 2022-06-14 10:32 /output
+drwxr-xr-x   - hduser supergroup          0 2022-06-14 10:31 /rgs
+drwxrwxr-x   - hduser supergroup          0 2019-08-01 16:19 /tmp
+drwxr-xr-x   - hduser supergroup          0 2022-06-15 09:58 /user
+drwxr-xr-x   - hduser supergroup          0 2022-06-15 10:04 /vallisha
+hduser@bmsce-Precision-T1700:~$ hadoop fs -copyFromLocal /home/hduser/Desktop/words.txt /mapreduce/test.txt
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /mapreduce
+Found 1 items
+-rw-r--r--   1 hduser supergroup         89 2022-06-18 10:03 /mapreduce/test.txt
+hduser@bmsce-Precision-T1700:~$ hadoop jar /home/hduser/Desktop/wordcount.jar WCDriver input output
+22/06/18 10:04:51 INFO Configuration.deprecation: session.id is deprecated. Instead, use dfs.metrics.session-id
+22/06/18 10:04:51 INFO jvm.JvmMetrics: Initializing JVM Metrics with processName=JobTracker, sessionId=
+22/06/18 10:04:51 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+Exception in thread "main" org.apache.hadoop.mapred.FileAlreadyExistsException: Output directory hdfs://localhost:54310/user/hduser/output already exists
+	at org.apache.hadoop.mapred.FileOutputFormat.checkOutputSpecs(FileOutputFormat.java:132)
+	at org.apache.hadoop.mapreduce.JobSubmitter.checkSpecs(JobSubmitter.java:564)
+	at org.apache.hadoop.mapreduce.JobSubmitter.submitJobInternal(JobSubmitter.java:432)
+	at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1296)
+	at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1293)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:422)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1628)
+	at org.apache.hadoop.mapreduce.Job.submit(Job.java:1293)
+	at org.apache.hadoop.mapred.JobClient$1.run(JobClient.java:562)
+	at org.apache.hadoop.mapred.JobClient$1.run(JobClient.java:557)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:422)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1628)
+	at org.apache.hadoop.mapred.JobClient.submitJobInternal(JobClient.java:557)
+	at org.apache.hadoop.mapred.JobClient.submitJob(JobClient.java:548)
+	at org.apache.hadoop.mapred.JobClient.runJob(JobClient.java:833)
+	at WCDriver.run(WCDriver.java:32)
+	at org.apache.hadoop.util.ToolRunner.run(ToolRunner.java:70)
+	at org.apache.hadoop.util.ToolRunner.run(ToolRunner.java:84)
+	at WCDriver.main(WCDriver.java:39)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.hadoop.util.RunJar.run(RunJar.java:221)
+	at org.apache.hadoop.util.RunJar.main(RunJar.java:136)
+hduser@bmsce-Precision-T1700:~$ hadoop fs -ls /output/
+Found 2 items
+-rw-r--r--   1 hduser supergroup          0 2022-06-14 10:32 /output/_SUCCESS
+-rw-r--r--   1 hduser supergroup         69 2022-06-14 10:32 /output/part-00000
+hduser@bmsce-Precision-T1700:~$ hadoop fs -cat /output/part-00000
+are	1
+brother	1
+family	1
+hi	1
+how	5
+is	4
+job	1
+sister	1
+you	1
+your	4
+hduser@bmsce-Precision-T1700:~$ 
